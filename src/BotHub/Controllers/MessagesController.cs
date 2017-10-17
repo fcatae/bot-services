@@ -17,8 +17,8 @@ namespace BotHub
         public Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
             if (activity.Type == ActivityTypes.Message)
-            {
-                HelloWorld(activity);
+            {                                
+                Services.BotHubServices.Route(activity);
             }
             else
             {
@@ -27,15 +27,6 @@ namespace BotHub
             var response = Request.CreateResponse(HttpStatusCode.OK);
 
             return Task.FromResult(response);
-        }
-
-        void HelloWorld(Activity message)
-        {
-            var connector = new ConnectorClient(new Uri(message.ServiceUrl));
-
-            var reply = message.CreateReply("Hello world");
-
-            connector.Conversations.ReplyToActivity(reply);
         }
 
         private Activity HandleSystemMessage(Activity message)

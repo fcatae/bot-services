@@ -113,11 +113,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BotContext\BotContext.cs" />
+    <Compile Include="BotContext\HelloWorldContext.cs" />
+    <Compile Include="BotContext\Messenger.cs" />
+    <Compile Include="Controllers\Bot1.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BotHubServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
