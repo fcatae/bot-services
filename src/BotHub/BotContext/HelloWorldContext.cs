@@ -23,7 +23,9 @@ namespace BotHub.BotContext
 
             while (true)
             {
-                string message = await _messenger.WaitReceiveAsync();
+                //await _scripter.LoadAsync(_messenger);
+
+                string message = await _messenger.WaitReceiveAsync().ConfigureAwait(false);
 
                 _messenger.Send(message);
             }

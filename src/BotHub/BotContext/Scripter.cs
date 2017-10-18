@@ -15,6 +15,7 @@ namespace BotHub.BotContext
             public int X;
             public int Y;
             public Task<int> ZS;
+            public Messenger Messenger;
         }
 
         public async Task RunAsync()
@@ -22,6 +23,25 @@ namespace BotHub.BotContext
             var globals = new Globals { X = 1, Y = 2, ZS=Task.FromResult(3) };
 
             var val = await RunScriptAsync(globals);
+        }
+
+        public async Task LoadAsync(Messenger messenger)
+        {
+            try
+            {
+                string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                string scriptText = System.IO.File.ReadAllText("Scripts\\hello.csx");
+            }
+            catch(Exception ex)
+            {
+
+            }
+            // await EvalScriptAsync(scriptText, new Globals() { Messenger = messenger });
+        }
+
+        public async Task<object> EvalScriptAsync(string script, Globals globals)
+        {
+            return await CSharpScript.EvaluateAsync(script, globals: globals);
         }
 
         public async Task<object> EvaluateAsync(Globals globals)

@@ -1,3 +1,3 @@
-string message = await WaitReceiveAsync();
+string message = await Messenger.WaitReceiveAsync();
 
-Send(message);
+Messenger.Send("Hello world");
