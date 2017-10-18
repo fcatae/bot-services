@@ -16,9 +16,13 @@ namespace BotHub
         /// </summary>
         public Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
+            // this may be dangerous: route all message types
+            Services.BotHubServices.Route(activity);
+
             if (activity.Type == ActivityTypes.Message)
-            {                                
-                Services.BotHubServices.Route(activity);
+            {
+                // it used to be route(messageOnly)
+                // Services.BotHubServices.Route(activity);
             }
             else
             {

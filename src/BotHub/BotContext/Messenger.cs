@@ -26,7 +26,18 @@ namespace BotHub.BotContext
 
         public void Route(Activity activity)
         {
-            _actitivyQueue.Enqueue(activity);
+            if (activity.Type == ActivityTypes.Message)
+            {
+                _actitivyQueue.Enqueue(activity);
+            }
+            else
+            {
+                // this may be dangerous: rely on metadata updates
+                if( _lastActivity == null )
+                {
+                    _lastActivity = activity;
+                }
+            }                
         }
 
         public void Send(string text)
