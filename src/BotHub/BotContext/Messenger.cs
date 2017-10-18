@@ -27,11 +27,13 @@ namespace BotHub.BotContext
         public void Route(Activity activity)
         {
             _actitivyQueue.Enqueue(activity);
-            _lastActivity = activity;
         }
 
         public void Send(string text)
         {
+            if (_lastActivity == null)
+                throw new InvalidOperationException("Cannot initiate a conversation");
+
             var reply = _lastActivity.CreateReply(text);
 
             _botConnector.Conversations.ReplyToActivity(reply);
@@ -43,7 +45,15 @@ namespace BotHub.BotContext
 
             _actitivyQueue.TryDequeue(out activity);
 
-            return (activity != null) ? activity.Text : null;
+            if (activity == null)
+            {
+                return null;
+            }
+
+            // set last activity
+            _lastActivity = activity;
+
+            return activity.Text;
         }
 
         public async Task<string> WaitReceiveAsync()
