@@ -115,6 +115,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BotContext\BotContext.cs" />
     <Compile Include="BotContext\HelloWorldContext.cs" />
+    <Compile Include="BotContext\Memory.cs" />
+    <Compile Include="BotContext\MemoryAllocator.cs" />
     <Compile Include="BotContext\Messenger.cs" />
     <Compile Include="Controllers\Bot1.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
