@@ -10,58 +10,31 @@ namespace BotHub.BotContext
 {
     public class Scripter
     {
-        public class Globals
+        public Task<object> RunScriptAsync(string textCode, Messenger messenger)
         {
-            public int X;
-            public int Y;
-            public Task<int> ZS;
-            public Messenger Messenger;
+            return RunScriptAsync(textCode, new ScripterGlobals { Messenger = messenger });
         }
 
-        public async Task RunAsync()
+        public async Task<object> RunScriptAsync(string textCode, ScripterGlobals globals)
         {
-            var globals = new Globals { X = 1, Y = 2, ZS=Task.FromResult(3) };
+            object returnValue = null;
 
-            var val = await RunScriptAsync(globals);
-        }
-
-        public async Task LoadAsync(Messenger messenger)
-        {
             try
             {
-                string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                string scriptText = System.IO.File.ReadAllText("Scripts\\hello.csx");
+                var script = CSharpScript.Create(textCode, globalsType: typeof(ScripterGlobals));
+                //script.Compile();
+                //script.CreateDelegate();
+
+                ScriptState state = await script.RunAsync(globals, catchException: ex => true).ConfigureAwait(false); ;
+
+                returnValue = state.ReturnValue;
             }
             catch(Exception ex)
             {
-
+                returnValue = ex;
             }
-            // await EvalScriptAsync(scriptText, new Globals() { Messenger = messenger });
-        }
 
-        public async Task<object> EvalScriptAsync(string script, Globals globals)
-        {
-            return await CSharpScript.EvaluateAsync(script, globals: globals);
-        }
-
-        public async Task<object> EvaluateAsync(Globals globals)
-        {
-            return await CSharpScript.EvaluateAsync<object>("X+Y", globals: globals);
-        }
-
-        public async Task<object> RunScriptAsync(Globals globals)
-        {
-            // bot 
-            // Data = new {};
-            // Services = new {};
-
-            //var options = ScriptOptions.Default.WithFilePath();
-            var script = CSharpScript.Create<object>("X*Y*(await ZS)", globalsType: typeof(Globals));
-            script.Compile();
-
-            var del = script.CreateDelegate();            
-
-            return (await script.RunAsync(globals)).ReturnValue;
+            return returnValue;
         }
 
 

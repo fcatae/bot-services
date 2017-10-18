@@ -73,10 +73,16 @@ namespace BotHub.BotContext
 
             while ((textMessage = Receive()) == null)
             {
-                await Task.Delay(1000).ConfigureAwait(false);
+                // bug? cannot be async?? hangs the program
+                //await Task.Delay(1000);
             }
 
             return textMessage;
+        }
+
+        public void Debug()
+        {
+            System.Diagnostics.Debug.WriteLine($"Debug time: {DateTime.Now.ToString()}");
         }
     }
 }

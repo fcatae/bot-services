@@ -195,6 +195,7 @@
     <Compile Include="BotContext\MemoryAllocator.cs" />
     <Compile Include="BotContext\Messenger.cs" />
     <Compile Include="BotContext\Scripter.cs" />
+    <Compile Include="BotContext\ScripterGlobals.cs" />
     <Compile Include="Controllers\Bot1.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Global.asax.cs">

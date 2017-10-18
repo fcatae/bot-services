@@ -19,16 +19,15 @@ namespace BotHub.BotContext
 
         public async Task RunAsync()
         {
-            // await _scripter.RunAsync();
+            string code = "while(true) { var message = await Messenger.WaitReceiveAsync(); Messenger.Debug(); }";
+            
+            await _scripter.RunScriptAsync(code, _messenger).ConfigureAwait(false);
 
-            while (true)
-            {
-                //await _scripter.LoadAsync(_messenger);
-
-                string message = await _messenger.WaitReceiveAsync().ConfigureAwait(false);
-
-                _messenger.Send(message);
-            }
+            //while (true)
+            //{
+            //    string message = await _messenger.WaitReceiveAsync().ConfigureAwait(false);
+            //    _messenger.Send(message);
+            //}
         }
     }
 }
