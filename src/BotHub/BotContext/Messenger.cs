@@ -74,7 +74,7 @@ namespace BotHub.BotContext
             while ((textMessage = Receive()) == null)
             {
                 // bug? cannot be async?? hangs the program
-                await Task.Delay(1000);
+                Task.Delay(1000).Wait();
             }
 
             return textMessage;
