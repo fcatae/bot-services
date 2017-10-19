@@ -19,9 +19,12 @@ namespace BotHub.BotContext
 
         public async Task RunAsync()
         {
-            string code = "while(true) { var message = await Messenger.WaitReceiveAsync(); Messenger.Debug(); }";
-            
-            await _scripter.RunScriptAsync(code, _messenger).ConfigureAwait(false);
+            //string code = "while(true) { var message = await Messenger.WaitReceiveAsync(); Messenger.Debug(); }";
+            //string code = "async System.Threading.Tasks.Task R() { while(true) { var message = await Messenger.WaitReceiveAsync(); Messenger.Debug(); } } Messenger.Debug1(); throw new System.Exception(); Messenger.Debug2();";
+            string code = "int f(int a) { return a+1 ; } \n return f(1); \n return f(2); \n return f(3); \n";
+
+            var task = _scripter.CreateTask(code, _messenger);
+            _scripter.Run(task);
 
             //while (true)
             //{
