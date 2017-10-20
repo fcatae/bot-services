@@ -19,6 +19,19 @@ if( Bot.PendingAnswer )
 
 ////////////////////////////////////////////////////////////
 
+Bot.Say($"Hello! My name is {Bot.Name}");
+
+Bot.Dialog("Blablabla")
+    .Match("yes", (answer) => {
+        Bot.Say("YEAH!!!");
+    })    
+    .MatchLuis( "yes", (answer) => {
+        Bot.Say("Please say just Yes!!!!");
+    })
+    .Retry("Sorry, I didn't understand your answer.");
+
+////////////////////////////////////////////////////////////
+
 // External
 
 Database.Insert({ c1 = "", c2 = "" });
